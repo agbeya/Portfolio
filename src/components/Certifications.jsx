@@ -40,8 +40,18 @@ function BadgeFallback() {
 /* Carte individuelle */
 function CertCard({ item, t }) {
   const [err, setErr] = useState(false);
+  const inProgress = item.status === "in-progress";
   return (
-    <div className="card card-hover h-full flex gap-4 items-center">
+    <div className="card card-hover h-full flex gap-4 items-center relative overflow-hidden">
+      {inProgress && (
+        <span
+          className="absolute top-2 right-2 text-xs font-medium rounded-full px-2.5 py-0.5"
+          style={{ background: "var(--accent-10)", color: "var(--accent)", border: "1px solid var(--accent-20)" }}
+        >
+          {t("certs.in_progress", "En cours")}
+        </span>
+      )}
+
       {!item.path || err ? (
         <BadgeFallback />
       ) : (

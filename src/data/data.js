@@ -1,7 +1,7 @@
 // Replace these links and texts as you like.
 export const SITE = {
   name: "Yao Anicet AGBONON EDAGBEDJI",
-  title: "Ingénieur Big Data & Machine Learning",
+  title: "Data & AI Engineer · GenAI · RAG · Data Platforms",
   email: "lanicet17@gmail.com",
   phone: "+33 7 82 37 47 10",
   linkedin: "https://www.linkedin.com/in/agbeya",
@@ -12,42 +12,54 @@ export const SITE = {
 export const HERO = {
   img: "/profil.jpg",
   headline: {
-    fr: "Ingénieur Big Data & Machine Learning",
-    en: "Big Data & Machine Learning Engineer",
+    fr: "Data & AI Engineer · GenAI · RAG · Data Platforms",
+    en: "Data & AI Engineer · GenAI · RAG · Data Platforms",
   },
   sub: {
-    fr: "Data Engineer chez Avanade — Natixis | Spécialiste PySpark, Azure, Snowflake, Informatica Cloud",
-    en: "Data Engineer at Avanade — Natixis | Specialist in PySpark, Azure, Snowflake, Informatica Cloud",
+    fr: "Data & AI Engineer chez Avanade — mission AXA France | GenAI, RAG, Databricks, Azure",
+    en: "Data & AI Engineer at Avanade — AXA France mission | GenAI, RAG, Databricks, Azure",
   },
   short: {
-    fr: "Passionné de l\'informatique, Yao Anicet est ingénieur Big Data & Machine Learning. Actuellement chez Avanade, travaillant sur des projets de Data Engineering pour Natixis.",
-    en: "Passionate about technology, Yao Anicet is a Big Data & Machine Learning engineer. Currently at Avanade, working on Data Engineering projects for Natixis.",
+    fr: "Ingénieur Big Data & IA (EFREI Paris), 4 ans d’expérience en Data Engineering et IA générative chez Avanade (alliance Accenture-Microsoft), sur des missions grands comptes dans la finance, l’industrie et la santé. Solide expertise en pipelines ETL/ELT, architectures RAG et plateformes Azure/Databricks.",
+    en: "Big Data & AI engineer (EFREI Paris), 4 years of experience in Data Engineering and Generative AI at Avanade (an Accenture-Microsoft alliance), on major-account missions across finance, industry and healthcare. Strong expertise in ETL/ELT pipelines, RAG architectures and Azure/Databricks platforms.",
   },
 };
+
+export const STATUS = {
+  fr: "En mission chez AXA France",
+  en: "Currently on assignment at AXA France",
+};
+
+export const METRICS = [
+  { value: "4+", label: { fr: "ans d’expérience", en: "years of experience" } },
+  { value: "6", label: { fr: "missions grands comptes", en: "major-account missions" } },
+  { value: "3", label: { fr: "secteurs : finance, industrie, santé", en: "sectors: finance, industry, healthcare" } },
+  { value: "10+", label: { fr: "certifications Microsoft & cloud", en: "Microsoft & cloud certifications" } },
+];
 
 export const ABOUT = {
   content: [
     {
-      fr: "Data Engineer chez Avanade (Sept 2022 - Sept 2024). Conception, gestion et optimisation des pipelines ETL via Informatica Cloud et Databricks.",
-      en: "Data Engineer at Avanade (Sept 2022 - Sept 2024). Design and optimization of ETL pipelines with Informatica Cloud and Databricks.",
+      fr: "Data & AI Engineer chez Avanade (alliance Accenture-Microsoft), actuellement en mission chez AXA France sur la migration Databricks de Hive Metastore vers Unity Catalog. Auparavant en charge du développement d’une solution IA générative multi-agent (Azure AI Foundry, RAG, GPT-5) pour Opella.",
+      en: "Data & AI Engineer at Avanade (an Accenture-Microsoft alliance), currently on assignment at AXA France on a Databricks migration from Hive Metastore to Unity Catalog. Previously led the development of a multi-agent generative AI solution (Azure AI Foundry, RAG, GPT-5) for Opella.",
     },
     {
-      fr: "Expériences antérieures en développement FullStack (Laravel, JEE) et projets d'intégration pour des plateformes financières en Afrique.",
-      en: "Previous experience in Full-Stack development (Laravel, JEE) and integration projects for financial platforms in Africa.",
+      fr: "Solide expertise en pipelines ETL/ELT, architectures RAG et gouvernance de la donnée, acquise sur des missions grands comptes dans la finance (Natixis), l’industrie (Danone, SAUR) et la santé (Opella).",
+      en: "Strong expertise in ETL/ELT pipelines, RAG architectures and data governance, built on major-account missions in finance (Natixis), industry (Danone, SAUR) and healthcare (Opella).",
     },
   ],
   bullets: [
     {
-      fr: "PySpark, SQL, JEE, Bootstrap, Git, Jira, etc.",
-      en: "PySpark, SQL, JEE, Bootstrap, Git, Jira, etc.",
+      fr: "Azure AI Foundry, Azure OpenAI (GPT-4o, GPT-5), RAG, MCP, Connected Agents",
+      en: "Azure AI Foundry, Azure OpenAI (GPT-4o, GPT-5), RAG, MCP, Connected Agents",
     },
     {
-      fr: "Databricks, Snowflake, Informatica Cloud",
-      en: "Databricks, Snowflake, Informatica Cloud",
+      fr: "Databricks, Unity Catalog, Snowflake, Delta Lake, PySpark",
+      en: "Databricks, Unity Catalog, Snowflake, Delta Lake, PySpark",
     },
     {
-      fr: "Power BI, Talend, SQLServer, PostgreSQL",
-      en: "Power BI, Talend, SQL Server, PostgreSQL",
+      fr: "Informatica Cloud, Azure Data Factory, Power BI, Streamlit",
+      en: "Informatica Cloud, Azure Data Factory, Power BI, Streamlit",
     },
   ],
 };
@@ -55,24 +67,83 @@ export const ABOUT = {
 export const EXPERIENCES = [
   {
     company: {
-      fr: "Avanade - Paris | Danone, Natixis",
-      en: "Avanade - Paris | Danone, Natixis",
+      fr: "Avanade - Paris | Client : AXA France",
+      en: "Avanade - Paris | Client: AXA France",
     },
-    title: { fr: "Data Engineer", en: "Data Engineer" },
-    date: { fr: "Sept 2022 - Présent", en: "Sept 2022 - Present" },
+    title: {
+      fr: "Data & AI Engineer — Migration Databricks",
+      en: "Data & AI Engineer — Databricks Migration",
+    },
+    date: { fr: "Juil 2026 - Présent", en: "Jul 2026 - Present" },
     desc: {
-      fr: "Conception, gestion, transformation et optimisation des données via des ETL sous Informatica Cloud. Mise en œuvre d'un modèle de données pour les données en libre-service.",
-      en: "Design, management, transformation and optimization of data through ETL on Informatica Cloud. Implemented a data model to enable self-service analytics.",
+      fr: "Migration Hive Metastore vers Unity Catalog sur Databricks pour AXA France : cadrage de la migration des métadonnées et des permissions, refonte du modèle de gouvernance des données (catalogues, schémas, contrôle d'accès), et intégration d'Azure OpenAI pour l'accompagnement de la migration.",
+      en: "Migration from Hive Metastore to Unity Catalog on Databricks for AXA France: metadata and permissions migration scoping, redesign of the data governance model (catalogs, schemas, access control), and Azure OpenAI integration to support the migration.",
+    },
+    stack: ["Databricks", "Unity Catalog", "Hive Metastore", "Azure OpenAI"],
+  },
+  {
+    company: {
+      fr: "Avanade - Paris | Client : Opella (Consumer Healthcare)",
+      en: "Avanade - Paris | Client: Opella (Consumer Healthcare)",
+    },
+    title: {
+      fr: "Data & AI Engineer — Solution GenAI Multi-Agent",
+      en: "Data & AI Engineer — GenAI Multi-Agent Solution",
+    },
+    date: { fr: "2026", en: "2026" },
+    desc: {
+      fr: "Conception et développement d'une solution multi-agent IA (Azure AI Foundry) pour l'analyse automatisée d'images et de vidéos de divulgation médicamenteuse. Architecture RAG complète (chunking, embedding, indexation Azure AI Search, reranking), intégration d'Azure Content Understanding, orchestration via Connected Agents et MCP, et mise en œuvre de l'observabilité LLM (journalisation des appels GPT-5, traçage des prompts).",
+      en: "Designed and developed a multi-agent AI solution (Azure AI Foundry) for automated analysis of medication-disclosure images and videos. Full RAG architecture (chunking, embedding, Azure AI Search indexing, reranking), Azure Content Understanding integration, orchestration via Connected Agents and MCP, and LLM observability (GPT-5 call logging, prompt tracing).",
+    },
+    stack: [
+      "Azure AI Foundry",
+      "Azure OpenAI GPT-4o/GPT-5",
+      "RAG",
+      "Azure AI Search",
+      "Azure Content Understanding",
+      "MCP",
+      "Azure Container",
+    ],
+  },
+  {
+    company: {
+      fr: "Avanade - Paris | Clients : Natixis, SAUR",
+      en: "Avanade - Paris | Clients: Natixis, SAUR",
+    },
+    title: { fr: "Data Engineer — ETL & IA", en: "Data Engineer — ETL & AI" },
+    date: { fr: "Oct 2024 - 2025", en: "Oct 2024 - 2025" },
+    desc: {
+      fr: "Conception et optimisation de pipelines ETL/ELT sous Informatica Cloud pour des données financières en environnement réglementé (Natixis). Développement de solutions IA pour SAUR (intégration Azure OpenAI pour l'enrichissement sémantique) et intégration de sources hétérogènes (Salesforce CRM, SQL Server).",
+      en: "Designed and optimized ETL/ELT pipelines on Informatica Cloud for financial data in a regulated environment (Natixis). Developed AI solutions for SAUR (Azure OpenAI integration for semantic enrichment) and integrated heterogeneous sources (Salesforce CRM, SQL Server).",
+    },
+    stack: [
+      "Informatica Cloud",
+      "Azure OpenAI",
+      "Salesforce",
+      "SQL Server",
+      "PostgreSQL",
+      "Python",
+      "Streamlit",
+    ],
+  },
+  {
+    company: {
+      fr: "Avanade - Paris | Clients : Danone R&I, Natixis",
+      en: "Avanade - Paris | Clients: Danone R&I, Natixis",
+    },
+    title: { fr: "Alternant Data Engineer", en: "Data Engineer (Apprenticeship)" },
+    date: { fr: "Sept 2022 - Sept 2024", en: "Sept 2022 - Sept 2024" },
+    desc: {
+      fr: "Conception de pipelines ETL et structuration d'un modèle de données en libre-service sur Snowflake (modélisation dimensionnelle, ingestion, mise à disposition métier). Traitement distribué PySpark sur Azure Databricks : transformations, agrégations, optimisation Spark SQL, partitionnement.",
+      en: "Designed ETL pipelines and structured a self-service data model on Snowflake (dimensional modeling, ingestion, business availability). Distributed PySpark processing on Azure Databricks: transformations, aggregations, Spark SQL optimization, partitioning.",
     },
     stack: [
       "PySpark",
-      "Azure",
+      "Azure Databricks",
+      "Snowflake",
       "Informatica Cloud",
       "Power BI",
-      "Snowflake",
-      "Databricks",
       "Jira",
-      "Confluence",
     ],
   },
   {
@@ -109,6 +180,32 @@ export const EXPERIENCES = [
 ];
 
 export const PROJECTS = [
+  {
+    kind: "mission",
+    sector: { fr: "Assurance", en: "Insurance" },
+    name: {
+      fr: "Migration Databricks : Hive Metastore → Unity Catalog",
+      en: "Databricks Migration: Hive Metastore → Unity Catalog",
+    },
+    desc: {
+      fr: "Cadrage et pilotage de la migration de la gouvernance des données sur Databricks : migration des métadonnées et permissions, refonte du modèle de catalogues/schémas et du contrôle d'accès, accompagnement outillé par Azure OpenAI.",
+      en: "Scoping and driving the data governance migration on Databricks: metadata and permissions migration, redesign of the catalog/schema model and access control, supported by Azure OpenAI tooling.",
+    },
+    tags: ["Databricks", "Unity Catalog", "Hive Metastore", "Azure OpenAI", "Data Governance"],
+  },
+  {
+    kind: "mission",
+    sector: { fr: "Santé grand public", en: "Consumer Healthcare" },
+    name: {
+      fr: "Solution IA générative multi-agent",
+      en: "Multi-Agent Generative AI Solution",
+    },
+    desc: {
+      fr: "Conception d'une solution multi-agent (Azure AI Foundry) pour l'analyse automatisée d'images et de vidéos de divulgation médicamenteuse : architecture RAG complète, orchestration via Connected Agents et MCP, observabilité LLM.",
+      en: "Designed a multi-agent solution (Azure AI Foundry) for automated analysis of medication-disclosure images and videos: full RAG architecture, orchestration via Connected Agents and MCP, LLM observability.",
+    },
+    tags: ["Azure AI Foundry", "RAG", "Azure OpenAI", "MCP", "Azure AI Search"],
+  },
   {
     name: {
       fr: "Speech Emotion Recognition (SERAPP)",
@@ -174,24 +271,36 @@ export const PROJECTS = [
 ];
 
 export const SKILLS = {
-  languages: ["PySpark", "Python", "Scala", "SQL", "Java", "JavaScript"],
+  genai: [
+    "Azure AI Foundry",
+    "Azure OpenAI (GPT-4o, GPT-5)",
+    "RAG",
+    "Multi-agent orchestration",
+    "MCP",
+    "Connected Agents",
+    "Azure AI Search",
+    "Azure Content Understanding",
+  ],
+  languages: ["PySpark", "Python", "Scala", "SQL", "Spark SQL", "Bash"],
   data_processing: [
     "Apache Spark",
     "Delta Lake",
+    "Unity Catalog",
     "Databricks",
     "Pandas",
     "NumPy",
     "scikit-learn",
   ],
-  cloud_dw: ["Azure (ADLS Gen2, Key Vault)", "Snowflake"],
+  cloud_dw: ["Azure (ADLS Gen2, Key Vault)", "Snowflake", "Medallion Architecture"],
   etl_orchestration: [
     "Informatica Cloud (IICS)",
+    "Azure Data Factory",
     "Databricks Workflows",
     "Talend",
   ],
   databases: ["SQL Server", "PostgreSQL", "Snowflake"],
-  bi_analytics: ["Power BI"],
-  devops_tools: ["Git & GitHub", "Docker", "Linux", "CI/CD (GitHub Actions)"],
+  bi_analytics: ["Power BI", "Streamlit"],
+  devops_tools: ["Git & GitHub", "Azure DevOps", "Docker", "Linux", "CI/CD"],
   soft: [
     { fr: "Rigueur", en: "Rigour" },
     { fr: "Esprit d\’équipe", en: "Team spirit" },
@@ -205,7 +314,7 @@ export const CERTIFICATES = [
     name: "Microsoft Certified: Azure Fundamentals",
     short: "AZ-900",
     issuer: "Microsoft",
-    path: "certif-img/ai900.png",
+    path: "certif-img/az900.png",
     link: "https://www.credly.com/badges/12345678-1234-1234-1234-123456789012",
   },
   {
@@ -284,5 +393,29 @@ export const CERTIFICATES = [
     issuer: "FFSFP Fédération Française de Sauvetage et de Secourisme",
     path: "certif-img/ffsfp.png",
     link: "https://www.credly.com/badges/12345678-1234-1234-1234-123456789012",
+  },
+  {
+    name: "Microsoft Fabric Data Engineer Associate",
+    short: "DP-700",
+    issuer: "Microsoft",
+    status: "in-progress",
+  },
+  {
+    name: "Microsoft Fabric Analytics Engineer Associate",
+    short: "DP-600",
+    issuer: "Microsoft",
+    status: "in-progress",
+  },
+  {
+    name: "Google Cloud Professional Data Engineer",
+    short: "GCP Data Engineer",
+    issuer: "Google Cloud",
+    status: "in-progress",
+  },
+  {
+    name: "Databricks Certified Associate Developer for Apache Spark",
+    short: "Spark Associate",
+    issuer: "Databricks",
+    status: "in-progress",
   },
 ];

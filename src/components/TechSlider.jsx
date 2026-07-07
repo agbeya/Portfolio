@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { SKILLS } from "../data/data";
+import { useLang } from "../contexts/LangContext";
 
 /* Icône compacte à gauche de la pill */
 function PillIcon() {
@@ -16,49 +18,37 @@ function PillIcon() {
   );
 }
 
-/** Données issues du CV (tu peux modifier l'ordre ou en ajouter) */
-const RAW_ITEMS = [
-  { label: "Laravel", meta: "PHP Framework" },
-  { label: "Bootstrap", meta: "CSS Framework" },
-  { label: "Primefaces", meta: "JSF UI" },
-  { label: "PySpark", meta: "Langage" },
-  { label: "Python", meta: "Langage" },
-  { label: "Scala", meta: "Langage" },
-  { label: "SQL", meta: "Langage" },
-  { label: "Java", meta: "Langage" },
-  { label: "C / C++", meta: "Langage" },
-  { label: "JavaScript", meta: "Langage" },
-  { label: "PHP", meta: "Langage" },
-  { label: "scikit-learn", meta: "ML" },
-  { label: "TensorFlow", meta: "Deep Learning" },
-  { label: "Keras", meta: "Deep Learning" },
-  { label: "OpenCV", meta: "Vision" },
-  { label: "matplotlib / seaborn", meta: "Viz" },
-  { label: "NLTK / spaCy", meta: "NLP" },
-  { label: "Azure Databricks", meta: "Plateforme" },
-  { label: "Informatica Cloud", meta: "ETL / iPaaS" },
-  { label: "Power BI", meta: "BI" },
-  { label: "Talend", meta: "ETL" },
-  { label: "Snowflake", meta: "Cloud DWH" },
-  { label: "Azure SQL", meta: "SGBD" },
-  { label: "PostgreSQL", meta: "SGBD" },
-  { label: "SQL Server", meta: "SGBD" },
-  { label: "MySQL", meta: "SGBD" },
-  { label: "Neo4j", meta: "Graph DB" },
-  { label: "Git / GitLab", meta: "VCS" },
-  { label: "Jira / Confluence", meta: "Gestion projet" },
-  { label: "VS Code / IntelliJ", meta: "IDE" },
+/** Groupes de compétences (SKILLS, data.js) utilisés pour alimenter le slider,
+ *  afin que le contenu reste toujours aligné avec la section Compétences. */
+const GROUPS = [
+  { key: "genai", metaKey: "skills.groups.genai" },
+  { key: "languages", metaKey: "skills.groups.languages" },
+  { key: "data_processing", metaKey: "skills.groups.processing" },
+  { key: "cloud_dw", metaKey: "skills.groups.cloudDw" },
+  { key: "etl_orchestration", metaKey: "skills.groups.etl" },
+  { key: "databases", metaKey: "skills.groups.db" },
+  { key: "bi_analytics", metaKey: "skills.groups.bi" },
+  { key: "devops_tools", metaKey: "skills.groups.devops" },
 ];
 
 export default function TechSlider({
   autoplay = true,
   interval = 2500,
-  items = RAW_ITEMS,
+  items,
 }) {
+  const { t } = useLang();
   const [idx, setIdx] = useState(0);
   const timer = useRef(null);
 
-  const safeItems = useMemo(() => items.filter(Boolean), [items]);
+  const defaultItems = useMemo(
+    () =>
+      GROUPS.flatMap((g) =>
+        (SKILLS[g.key] || []).map((label) => ({ label, meta: t(g.metaKey) }))
+      ),
+    [t]
+  );
+
+  const safeItems = useMemo(() => (items || defaultItems).filter(Boolean), [items, defaultItems]);
   const length = safeItems.length;
 
   useEffect(() => {

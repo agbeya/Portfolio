@@ -49,8 +49,8 @@ const translations = {
     // HERO
     hero: {
       rotating: [
-        "Data Engineer | Data Scientist | Software Engineer",
-        "Data Engineer chez Avanade",
+        "Data & AI Engineer | GenAI | RAG",
+        "Data & AI Engineer chez Avanade",
         "Passionné de Tech, Data & IA",
       ],
       // Optionnel : mets un texte ici si tu veux surcharger HERO.short dans data.js
@@ -73,6 +73,7 @@ const translations = {
       lead:
         "Missions clés, contexte et stacks mises en œuvre.",
       stack_label: "Technologies",
+      current: "En cours",
     },
 
     // PROJECTS
@@ -82,12 +83,16 @@ const translations = {
       github: "GitHub",
       demo: "Démo",
       preview_unavailable: "Aperçu indisponible",
+      more: "Voir plus",
+      less: "Voir moins",
+      mission_badge: "Mission client",
     },
 
     // SKILLS
     skills: {
       lead: "Compétences techniques et outils utilisés au quotidien.",
       groups: {
+        genai: "IA Générative & Agents",
         languages: "Langages & Query",
         processing: "Big Data & Processing",
         cloudDw: "Cloud & Data Warehousing",
@@ -106,6 +111,7 @@ const translations = {
       view_badge: "Voir le badge",
       more: "Voir plus",
       less: "Voir moins",
+      in_progress: "En cours",
     },
 
     // CONTACT
@@ -168,8 +174,8 @@ const translations = {
 
     hero: {
       rotating: [
-        "Data Engineer | Data Scientist | Software Engineer",
-        "Data Engineer at Avanade",
+        "Data & AI Engineer | GenAI | RAG",
+        "Data & AI Engineer at Avanade",
         "Passionate about Tech, Data & AI",
       ],
       // pitch: "Big Data & Machine Learning engineer, specialized in PySpark, Azure and Snowflake.",
@@ -187,6 +193,7 @@ const translations = {
     exp: {
       lead: "Key missions, context and the stacks I’ve used.",
       stack_label: "Technologies",
+      current: "Current",
     },
 
     projects: {
@@ -195,11 +202,15 @@ const translations = {
       github: "GitHub",
       demo: "Live demo",
       preview_unavailable: "Preview unavailable",
+      more: "Show more",
+      less: "Show less",
+      mission_badge: "Client mission",
     },
 
     skills: {
       lead: "Technical skills and tools I use day-to-day.",
       groups: {
+        genai: "Generative AI & Agents",
         languages: "Languages & Query",
         processing: "Big Data & Processing",
         cloudDw: "Cloud & Data Warehousing",
@@ -217,6 +228,7 @@ const translations = {
       view_badge: "View badge",
       more: "Show more",
       less: "Show less",
+      in_progress: "In progress",
     },
 
     contact: {

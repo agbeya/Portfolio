@@ -1,96 +1,91 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { SITE, HERO } from "../data/data";
+import { SITE, HERO, STATUS, METRICS } from "../data/data";
 import TechSlider from "./TechSlider";
 import { useLang } from "../contexts/LangContext";
 
-/** --------- Fond animé (icônes flottantes) ---------- */
+/** --------- Fond animé (réseau de nœuds — clin d'œil GenAI/data) ---------- */
 function BackgroundFX() {
-  // Quelques icônes SVG “légères”
-  const ICONS = useMemo(
-    () => [
-      // code </>
-      (props) => (
-        <svg viewBox="0 0 24 24" {...props}><path d="M9 9l-3 3 3 3M15 9l3 3-3 3" fill="none" stroke="currentColor" strokeWidth="1.6"/></svg>
-      ),
-      // cloud
-      (props) => (
-        <svg viewBox="0 0 24 24" {...props}><path d="M7 18h10a4 4 0 0 0 .6-7.96A6 6 0 0 0 6 10a4 4 0 0 0 1 8z" fill="none" stroke="currentColor" strokeWidth="1.6"/></svg>
-      ),
-      // database
-      (props) => (
-        <svg viewBox="0 0 24 24" {...props}><ellipse cx="12" cy="5" rx="7" ry="3" fill="none" stroke="currentColor" strokeWidth="1.6"/><path d="M5 5v6c0 1.7 3.1 3 7 3s7-1.3 7-3V5M5 11v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6" fill="none" stroke="currentColor" strokeWidth="1.6"/></svg>
-      ),
-      // sparkle / star
-      (props) => (
-        <svg viewBox="0 0 24 24" {...props}><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z" fill="none" stroke="currentColor" strokeWidth="1.6"/></svg>
-      ),
-      // chart bars
-      (props) => (
-        <svg viewBox="0 0 24 24" {...props}><path d="M5 19V9M10 19V5M15 19v-7M20 19V8" fill="none" stroke="currentColor" strokeWidth="1.6"/></svg>
-      ),
-    ],
-    []
-  );
+  // Nœuds générés une seule fois, positions en % (viewBox 0..100)
+  const { nodes, edges } = useMemo(() => {
+    const COUNT = 26;
+    const pts = Array.from({ length: COUNT }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      r: 0.5 + Math.random() * 0.7,
+      pulseDur: 3 + Math.random() * 4,
+      pulseDelay: Math.random() * -6,
+    }));
 
-  // On “génère” des particules une seule fois
-  const items = useMemo(() => {
-    const arr = [];
-    const COUNT = 16; // assez pour être vivant mais léger
-    for (let i = 0; i < COUNT; i++) {
-      const Icon = ICONS[i % ICONS.length];
-      arr.push({
-        id: i,
-        Icon,
-        left: Math.random() * 100,          // en %
-        top: Math.random() * 100,           // en %
-        size: 28 + Math.random() * 22,      // px
-        rotate: Math.random() * 360,        // deg
-        drift: 12 + Math.random() * 22,     // amplitude px
-        dur: 9 + Math.random() * 9,         // s
-        delay: Math.random() * -12,         // s (décalage)
-        opacity: 0.12 + Math.random() * 0.12,
+    // Relie chaque nœud à son plus proche voisin (dans une distance max) → look "constellation" sobre
+    const MAX_DIST = 22;
+    const links = [];
+    pts.forEach((a, i) => {
+      let best = null;
+      let bestDist = Infinity;
+      pts.forEach((b, j) => {
+        if (i === j) return;
+        const d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d < bestDist) {
+          bestDist = d;
+          best = j;
+        }
       });
-    }
-    return arr;
-  }, [ICONS]);
+      if (best !== null && bestDist < MAX_DIST) {
+        const key = i < best ? `${i}-${best}` : `${best}-${i}`;
+        if (!links.some((l) => l.key === key)) {
+          links.push({ key, a: pts[i], b: pts[best] });
+        }
+      }
+    });
+
+    return { nodes: pts, edges: links };
+  }, []);
 
   return (
     <div className="pointer-events-none absolute inset-0 -z-10 hero-bg">
-      {/* léger dégradé radiale + grain très soft */}
+      {/* léger dégradé radial */}
       <div className="absolute inset-0 mix-blend-soft-light opacity-[0.35] bg-[radial-gradient(60%_40%_at_50%_40%,var(--accent-10),transparent_70%)]" />
-      <div className="absolute inset-0 opacity-[0.08] bg-[repeating-linear-gradient(0deg,transparent_0,transparent_2px,rgba(0,0,0,.04)_3px,transparent_4px)]" />
 
-      {/* Icônes animées */}
-      {items.map((p) => (
-        <motion.div
-          key={p.id}
-          className="fx-icon"
-          style={{
-            left: `${p.left}%`,
-            top: `${p.top}%`,
-            opacity: p.opacity,
-            color: "var(--heading)",        // s’adapte au thème
-            transform: `translate(-50%,-50%) rotate(${p.rotate}deg)`,
-            filter: "drop-shadow(0 2px 10px var(--accent-10)) blur(0.2px)",
-          }}
-          aria-hidden
-          initial={{ y: 0 }}
-          animate={{
-            y: [0, -p.drift, 0, p.drift, 0],
-            x: [0, p.drift / 2, 0, -p.drift / 2, 0],
-            rotate: [p.rotate, p.rotate + 12, p.rotate],
-          }}
-          transition={{
-            duration: p.dur,
-            delay: p.delay,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
-          <p.Icon width={p.size} height={p.size} />
-        </motion.div>
-      ))}
+      <svg
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+        className="absolute inset-0 h-full w-full"
+        style={{ color: "var(--accent)" }}
+        aria-hidden
+      >
+        {edges.map((e) => (
+          <line
+            key={e.key}
+            x1={e.a.x}
+            y1={e.a.y}
+            x2={e.b.x}
+            y2={e.b.y}
+            stroke="currentColor"
+            strokeOpacity={0.12}
+            strokeWidth={0.12}
+            vectorEffect="non-scaling-stroke"
+          />
+        ))}
+        {nodes.map((n) => (
+          <motion.circle
+            key={n.id}
+            cx={n.x}
+            cy={n.y}
+            r={n.r}
+            fill="currentColor"
+            initial={{ opacity: 0.15 }}
+            animate={{ opacity: [0.15, 0.55, 0.15] }}
+            transition={{
+              duration: n.pulseDur,
+              delay: n.pulseDelay,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
+      </svg>
     </div>
   );
 }
@@ -98,7 +93,8 @@ function BackgroundFX() {
 /** --------------------------------------------------- */
 
 export function Hero() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
+  const tx = (v) => (typeof v === "object" && v !== null ? v[lang] ?? v.fr ?? "" : v ?? "");
   const texts = t("hero.rotating", []);
 
   const [index, setIndex] = useState(0);
@@ -118,7 +114,7 @@ export function Hero() {
   };
 
   return (
-    <section id="top" className="relative flex flex-col items-center justify-center text-center min-h-screen px-4 overflow-hidden">
+    <section id="top" className="relative flex flex-col items-center justify-center text-center min-h-screen px-4 pt-28 pb-10 overflow-hidden">
       {/* Fond animé */}
       <BackgroundFX />
 
@@ -132,6 +128,29 @@ export function Hero() {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1 }}
       />
+
+      {/* Badge de statut */}
+      {STATUS && (
+        <motion.div
+          className="pill mb-4 text-sm"
+          style={{ borderColor: "var(--accent-20)" }}
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+        >
+          <span
+            className="relative inline-flex h-2 w-2 rounded-full"
+            style={{ background: "#22c55e" }}
+            aria-hidden
+          >
+            <span
+              className="absolute inline-flex h-full w-full rounded-full animate-ping"
+              style={{ background: "#22c55e", opacity: 0.6 }}
+            />
+          </span>
+          {tx(STATUS)}
+        </motion.div>
+      )}
 
       {/* Nom */}
       <motion.h1
@@ -209,6 +228,25 @@ export function Hero() {
           {t("hero.ctas.contact")}
         </a>
       </motion.div>
+
+      {/* Bandeau de metrics */}
+      {Array.isArray(METRICS) && METRICS.length > 0 && (
+        <motion.div
+          className="mt-10 flex flex-wrap items-center justify-center gap-x-10 gap-y-4"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1 }}
+        >
+          {METRICS.map((m, i) => (
+            <div key={i} className="text-center">
+              <div className="text-2xl sm:text-3xl font-semibold" style={{ color: "var(--accent)" }}>
+                {m.value}
+              </div>
+              <div className="muted text-xs sm:text-sm max-w-[9rem]">{tx(m.label)}</div>
+            </div>
+          ))}
+        </motion.div>
+      )}
 
       {/* Slider outils/langages/frameworks */}
       <TechSlider />

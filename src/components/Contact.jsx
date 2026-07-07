@@ -40,12 +40,14 @@ function SocialCard({ href, icon: Icon, title, subtitle, className = "" }) {
   return (
     <a
       href={href}
-      className={`card card-hover flex flex-col items-center justify-center gap-2 text-center p-6 ${className}`}
+      className={`group card card-hover flex flex-col items-center justify-center gap-2 text-center p-6 ${className}`}
       target={href.startsWith("http") ? "_blank" : undefined}
       rel={href.startsWith("http") ? "noreferrer" : undefined}
     >
-      <Icon />
-      <div className="text-lg font-semibold" style={{ color: "var(--heading)" }}>
+      <span className="transition-colors group-hover:text-[var(--accent)]">
+        <Icon />
+      </span>
+      <div className="text-lg font-semibold font-heading" style={{ color: "var(--heading)" }}>
         {title}
       </div>
       <div className="muted text-sm">{subtitle}</div>
@@ -107,7 +109,7 @@ export function Contact() {
           download
           target="_blank"
           rel="noreferrer"
-          className="card card-hover sm:col-span-1 sm:row-span-2 sm:h-[calc(22rem+1.5rem)] flex flex-col items-center justify-center text-center p-8 md:p-10"
+          className="group card card-hover sm:col-span-1 sm:row-span-2 sm:h-[calc(22rem+1.5rem)] flex flex-col items-center justify-center text-center p-8 md:p-10"
         >
           <div className="w-full max-w-[28rem] mx-auto flex flex-col items-center">
             <DownloadIconCircle />
@@ -116,8 +118,8 @@ export function Contact() {
             </h3>
             <p className="muted mt-3">{t("contact.cv_sub", "Version prête à l’emploi.")}</p>
             <div
-              className="mt-6 inline-flex items-center gap-2 rounded-full px-4 py-2 border"
-              style={{ borderColor: "var(--border)", background: "color-mix(in srgb, var(--text) 6%, transparent)" }}
+              className="mt-6 inline-flex items-center gap-2 rounded-full px-4 py-2 border transition-colors group-hover:bg-[var(--accent-20)]"
+              style={{ borderColor: "var(--accent)" }}
             >
               <span className="text-sm font-medium">{t("contact.cv_btn", "Télécharger")}</span>
             </div>

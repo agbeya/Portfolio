@@ -1,6 +1,6 @@
 // src/components/Projects.jsx
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { PROJECTS } from "../data/data";
 import { useLang } from "../contexts/LangContext";
 
@@ -148,12 +148,138 @@ function CardIcon() {
   );
 }
 
+/* ====== Vignette pour une mission client (pas de lien public) ====== */
+function MissionPreview({ sector }) {
+  return (
+    <div className="relative overflow-hidden rounded-lg border" style={{ borderColor: "var(--accent-20)", background: "var(--card-bg)" }}>
+      <div className="aspect-[16/9] w-full flex items-center justify-center bg-gradient-to-tr from-[var(--card-bg)] to-[var(--accent-10)]">
+        <div className="text-center px-4">
+          <div
+            className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl border"
+            style={{ borderColor: "var(--accent-20)", background: "var(--card-bg)", color: "var(--accent)" }}
+          >
+            <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.6">
+              <path d="M4 4h7v7H4zM13 13h7v7h-7zM13 4h7v7h-7zM4 13h7v7H4z" />
+            </svg>
+          </div>
+          <p className="text-sm font-medium" style={{ color: "var(--heading)" }}>{sector}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ====== Chevron (indicateur "voir plus / voir moins") ====== */
+function Chevron({ open }) {
+  return (
+    <motion.svg
+      viewBox="0 0 24 24"
+      className="h-5 w-5 flex-shrink-0"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      animate={{ rotate: open ? 180 : 0 }}
+      transition={{ duration: 0.2 }}
+      style={{ color: "var(--muted)" }}
+    >
+      <path d="M6 9l6 6 6-6" />
+    </motion.svg>
+  );
+}
+
+/* ====== Badge "Mission client" ====== */
+function MissionBadge({ children }) {
+  return (
+    <span
+      className="inline-flex items-center gap-1.5 text-xs font-medium rounded-full px-2.5 py-1 mb-2"
+      style={{ background: "var(--accent-10)", color: "var(--accent)", border: "1px solid var(--accent-20)" }}
+    >
+      {children}
+    </span>
+  );
+}
+
+/* ====== Carte projet (titre visible, détails repliables) ====== */
+function ProjectCard({ p, t, lang }) {
+  const [open, setOpen] = useState(false);
+  const tx = (v) => (typeof v === "string" ? v : v?.[lang] ?? v?.fr ?? v?.en ?? "");
+  const sectorLabel = p.sector ? tx(p.sector) : "";
+
+  return (
+    <motion.article
+      className="group relative card card-hover will-change-transform overflow-hidden"
+      whileHover={{ y: -3 }}
+    >
+      {/* aperçu */}
+      {p.link ? (
+        <Preview url={p.link} alt={tx(p.name)} manual={p.preview} t={t} />
+      ) : p.kind === "mission" ? (
+        <MissionPreview sector={sectorLabel} />
+      ) : null}
+
+      {/* contenu */}
+      <div className="mt-4">
+        <CardIcon />
+        {p.kind === "mission" && (
+          <div>
+            <MissionBadge>
+              {t("projects.mission_badge", "Mission client")}
+              {sectorLabel ? ` — ${sectorLabel}` : ""}
+            </MissionBadge>
+          </div>
+        )}
+
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          aria-expanded={open}
+          className="mt-3 flex w-full items-center justify-between gap-3 text-left"
+        >
+          <h3 className="text-lg" style={{ color: "var(--heading)" }}>
+            {tx(p.name)}
+          </h3>
+          <Chevron open={open} />
+        </button>
+
+        <AnimatePresence initial={false}>
+          {open && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.25, ease: "easeInOut" }}
+              className="overflow-hidden"
+            >
+              <p className="mt-2 body90 leading-relaxed">{tx(p.desc)}</p>
+
+              {Array.isArray(p.tags) && p.tags.length > 0 && (
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {p.tags.map((tag, k) => (
+                    <span key={k} className="chip">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              <div className="mt-4 flex flex-wrap gap-3">
+                <ViewBtn href={p.link}>{t("projects.view", "Voir le projet")}</ViewBtn>
+                {p.github && <ViewBtn href={p.github}>{t("projects.github", "GitHub")}</ViewBtn>}
+                {p.demo && <ViewBtn href={p.demo}>{t("projects.demo", "Démo")}</ViewBtn>}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      <div className="pointer-events-none absolute inset-0 rounded-2xl ring-0 group-hover:ring-1 group-hover:ring-[var(--accent-20)] transition" />
+    </motion.article>
+  );
+}
+
 /* ====== Composant principal ====== */
 export default function Projects() {
   const { t, lang } = useLang();
-
-  // Helper pour lire un champ bilingue ou une string simple
-  const tx = (v) => (typeof v === "string" ? v : v?.[lang] ?? v?.fr ?? v?.en ?? "");
 
   return (
     <motion.section
@@ -173,41 +299,7 @@ export default function Projects() {
 
       <div className="grid gap-6 sm:grid-cols-2">
         {PROJECTS.map((p, i) => (
-          <motion.article
-            key={i}
-            className="group relative card card-hover will-change-transform overflow-hidden"
-            whileHover={{ y: -3 }}
-          >
-            {/* aperçu */}
-            {p.link && <Preview url={p.link} alt={tx(p.name)} manual={p.preview} t={t} />}
-
-            {/* contenu */}
-            <div className="mt-4">
-              <CardIcon />
-              <h3 className="mt-3 text-lg" style={{ color: "var(--heading)" }}>
-                {tx(p.name)}
-              </h3>
-              <p className="mt-2 body90 leading-relaxed">{tx(p.desc)}</p>
-
-              {Array.isArray(p.tags) && p.tags.length > 0 && (
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {p.tags.map((tag, k) => (
-                    <span key={k} className="chip">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
-
-              <div className="mt-4 flex flex-wrap gap-3">
-                <ViewBtn href={p.link}>{t("projects.view", "Voir le projet")}</ViewBtn>
-                {p.github && <ViewBtn href={p.github}>{t("projects.github", "GitHub")}</ViewBtn>}
-                {p.demo && <ViewBtn href={p.demo}>{t("projects.demo", "Démo")}</ViewBtn>}
-              </div>
-            </div>
-
-            <div className="pointer-events-none absolute inset-0 rounded-2xl ring-0 group-hover:ring-1 group-hover:ring-[var(--accent-20)] transition" />
-          </motion.article>
+          <ProjectCard key={i} p={p} t={t} lang={lang} />
         ))}
       </div>
     </motion.section>
